@@ -1,5 +1,3 @@
-import os
-
 f = open("./Advent Of Code 2023/Day1/input1.txt", "r")
 inputs = f.read().split("\n")
 

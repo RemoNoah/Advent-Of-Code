@@ -1,4 +1,3 @@
-import os
 f = open("./Advent Of Code 2023/Day1/input2.txt", "r")
 inputs = f.read().split("\n")
 
@@ -46,7 +45,5 @@ def main(inputs):
             selectedSorted_list = sorted_list[0][1] , sorted_list[len(sorted_list) -1][1]
             results += get_number(selectedSorted_list, spelled)
     return results
-
-
-    
+  
 print(main(inputs))
