@@ -1,3 +1,4 @@
+from shapely.geometry import Point, Polygon
 lines = open("./Advent Of Code 2023/Day10/input.txt", "r").read().splitlines()
 
 #[step, digit, x, y]
@@ -53,5 +54,18 @@ for y, line in enumerate(lines):
     
 while coordinates[-1][1] != "S":
     pattern(coordinates[-1], coordinates[-2])
-    
-print((len(coordinates)-1)/2)
+
+coords = []
+for point in coordinates[:len(coordinates)-1]:
+    coords.append([point[2], point[3]])
+
+result = 0
+polygon = Polygon(coords)
+
+for iL, line in enumerate(lines):
+    for iC, char in enumerate(line):
+        if [iC, iL] not in coords:
+            if polygon.contains(Point(iC,iL)):
+                result += 1
+
+print(result)
