@@ -50,27 +50,6 @@ def xor_string(s1, s2):
     return result
 
 
-
-
-def recursive_mask_gen(start_mask, button_wiring, index, new_masks, already_seen, searched):
-    
-    if index >= len(button_wiring):
-        return new_masks
-    
-    xor_result = xor_string(start_mask, button_wiring[index])
-    
-    if not xor_result in already_seen:
-        new_masks.append(xor_result)
-    if xor_result == searched:
-        return new_masks, True
-
-    return recursive_mask_gen(xor_result, button_wiring, index + 1, new_masks, already_seen, searched)
-
-    
-
-
-
-
 def pat1(data):
    
     for line in data:
