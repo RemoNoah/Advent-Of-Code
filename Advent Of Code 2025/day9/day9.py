@@ -1,4 +1,4 @@
-data = open("./day9/input.txt", "r").read().splitlines()
+data = open("./Advent Of Code 2025/day9/input.txt", "r").read().splitlines()
 
 def data_setup(data):
     cleaned_data = []
@@ -120,6 +120,7 @@ def part2(data):
 
     for pair in corner_pairs:
         checked = check_rectangle_edges(pair, horizontal_edges, vertical_edges)
+        #print("checked pair" + str(pair))
         if not checked:
             #print(f"Rectangle edges intersect with polygon edges for pair: {pair}")
             continue  # Skip this pair if the rectangle edges intersect with the polygon edges
@@ -127,9 +128,7 @@ def part2(data):
         corners = get_rect_corners_inside(pair)
         is_inside = is_inside_shape(corners[0][0], corners[0][1],  vertical_edges)
         
-        # print("checked pair" + str(pair))
         if is_inside:
-            print(f"Is inside: {is_inside}")
             area = get_area(pair[0], pair[1])
             print(f"Area: {area}")
             return area

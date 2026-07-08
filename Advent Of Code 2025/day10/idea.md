@@ -113,3 +113,7 @@ I always start wit all of "0000"
 3^2
 4^2
 but those include duplicates
+
+
+for mask in masks:
+    

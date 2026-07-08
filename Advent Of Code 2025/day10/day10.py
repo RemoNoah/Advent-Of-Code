@@ -1,4 +1,4 @@
-data = open("./day10/input.txt", "r").read().splitlines()
+data = open("./Advent Of Code 2025/day10/input.txt", "r").read().splitlines()
 
 def create_binary_manuals(data):
     return data.replace("#", "1").replace(".", "0").replace("[", "").replace("]", "")
@@ -49,15 +49,23 @@ def xor_string(s1, s2):
         result += "1" if new else "0"
     return result
 
-def recursive_mask_gen(mask, button_wiring, index, masks):
-    if index >= len(button_wiring) or mask in masks:
-        return masks
-    
-    xor_result = xor_string(mask, button_wiring[index])
-    masks.append(xor_result)
 
-    return recursive_mask_gen(xor_result, button_wiring, index + 1, masks)
+
+
+def recursive_mask_gen(start_mask, button_wiring, index, new_masks, already_seen, searched):
     
+    if index >= len(button_wiring):
+        return new_masks
+    
+    xor_result = xor_string(start_mask, button_wiring[index])
+    
+    if not xor_result in already_seen:
+        new_masks.append(xor_result)
+    if xor_result == searched:
+        return new_masks, True
+
+    return recursive_mask_gen(xor_result, button_wiring, index + 1, new_masks, already_seen, searched)
+
     
 
 
@@ -67,14 +75,37 @@ def pat1(data):
    
     for line in data:
 
-
         manual = line["manual"]
-        masks = {}
-        masks["0"] = manual
-        masks["1"] = line["button_wirings"]
-
-        button_wirings = recursive_mask_gen(manual, line["button_wirings"], 0, [])
-        masks[str(i + 2)] = button_wirings
+        masks = []
+        masks.append(manual)
+        masks.append((line["button_wirings"]))
+        
+        if manual in line["button_wirings"]:
+            print(f"Found manual {manual} with 1")
+            continue
+        
+        is_found = False
+        
+        while not is_found:
+            new_masks = []
+            for i, button in enumerate(masks[len(masks) - 1]):
+                
+                already_seen = [item for sublist in masks[1:] for item in sublist]
+                already_seen.insert(0, "0" * len(manual))
+                
+                for other_button in line["button_wirings"][i+1:]:
+                    xor_result = xor_string(button, other_button)
+                    if not xor_result in already_seen:
+                        new_masks.append(xor_result)
+                
+                        if xor_result == manual:
+                            is_found = True
+                            print(f"Found manual {manual} with {len(masks)}")
+                            break
+                
+                if is_found:
+                    break
+            masks.append(new_masks)
 
 
 
