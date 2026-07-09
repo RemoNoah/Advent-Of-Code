@@ -106,14 +106,77 @@ presses : masks[]
 
 With diffrent options come diffren possabilities
 
-I always start wit all of "0000"
-
-1^2
-2^2
-3^2
-4^2
-but those include duplicates
 
 
-for mask in masks:
-    
+
+# Part 2
+
+[Manual], (button_wiring), {joltage} 
+[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}
+
+
+1. find how to reach joltage with the fewest button presses
+2. button tells index where to add + 1 -> (3) => (0,0,0,1)
+3. press as few buttons as possible to get to joltage
+4. buttons can be pressed multiple times 
+
+like part one build every possibility.
+
+This will get to big to brute force
+
+## Rules
+Add more rules if any of the joltage params gets higher then the jolate we are searching it can be deleted.
+{1, 1} -> {2, 1} (Not possible to go down)
+
+Add rules if on param can only be increased by one button. it has to be presst the exact amount of times of the pra value:
+(0) (1,2) (0,2) (2) {0,3,x} -> joltage[1] can only be increased by pressing the second button.
+(1,2) * 3 = {0,3,3} can then be used as startung possition skipping all other option up to button press 3
+
+(Could also happen for multiple joltage params.)
+
+## Implementation
+use set to search for already existing joltage options (sets are efficient) store all states ever reached and check them.
+
+Two options:
+Either build up to the searched joltage (start from: {0,0,0,0} add untill {x,x,x,x} is reached)
+Or start with the searched and reach {0,0,0,0} subbstracting every option
+
+if searched is found the button presses can be added to the total sum and the loop can be broken to go to the next line
+
+
+
+## Try 2
+building a knoadge piramyd
+
+starting states : 1100, 0001, 0011
+1101: 1100, 0001
+1111: 1100, 0011
+0012: 0001, 0011
+.......
+
+Too big
+
+
+## Try 3
+make lists per button press
+
+unique states:
+1: (001, 010, 100)
+2: (011, 101, 110, 002, 020, 200)
+....
+....
+....
+
+
+
+## Try 4
+DONT BRUTE Force
+
+Math: 
+buttons
+
+vec_button_1 + ....... + vex_button_2 = vec_searched 
+
+

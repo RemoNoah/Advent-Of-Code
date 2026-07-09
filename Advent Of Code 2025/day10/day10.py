@@ -1,4 +1,5 @@
 data = open("./Advent Of Code 2025/day10/input.txt", "r").read().splitlines()
+testdata = open("./Advent Of Code 2025/day10/testInput.txt", "r").read().splitlines()
 
 def create_binary_manuals(data):
     return data.replace("#", "1").replace(".", "0").replace("[", "").replace("]", "")
@@ -51,9 +52,10 @@ def xor_string(s1, s2):
 
 
 def pat1(data):
-   
-    for line in data:
+    sum_tries = 0
 
+
+    for line in data:
         manual = line["manual"]
         masks = []
         masks.append(manual)
@@ -61,33 +63,42 @@ def pat1(data):
         
         if manual in line["button_wirings"]:
             print(f"Found manual {manual} with 1")
+            sum_tries += 1
             continue
         
         is_found = False
         
         while not is_found:
             new_masks = []
-            for i, button in enumerate(masks[len(masks) - 1]):
-                
-                already_seen = [item for sublist in masks[1:] for item in sublist]
-                already_seen.insert(0, "0" * len(manual))
-                
-                for other_button in line["button_wirings"][i+1:]:
+            already_seen = [item for sublist in masks[1:] for item in sublist]
+            already_seen.insert(0, "0" * len(manual))
+            print("--------------------")
+            print("Searching Manual: " + manual + " with " + str(len(masks)) + " masks")
+
+            for button in masks[1]:
+                for other_button in masks[len(masks) - 1]:
                     xor_result = xor_string(button, other_button)
                     if not xor_result in already_seen:
-                        new_masks.append(xor_result)
-                
                         if xor_result == manual:
                             is_found = True
                             print(f"Found manual {manual} with {len(masks)}")
+                            sum_tries += len(masks)
                             break
+
+                        new_masks.append(xor_result)
+                        already_seen.append(xor_result)
                 
                 if is_found:
                     break
+
             masks.append(new_masks)
+    
+    print(f"Total tries: {sum_tries}")
+    return sum_tries 
 
 
 
 
 data = data_setup(data)
+testdata = data_setup(testdata)
 pat1(data)
