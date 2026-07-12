@@ -106,8 +106,7 @@ presses : masks[]
 
 With diffrent options come diffren possabilities
 
-
-
+---
 
 # Part 2
 
@@ -177,6 +176,30 @@ DONT BRUTE Force
 Math: 
 buttons
 
-vec_button_1 + ....... + vex_button_2 = vec_searched 
+vec_button_1*c + vex_button_2*c + ....... + vec_button_n*c = vec_searched 
+
+
+Example:
+
+line: [ignored], (0,1), (1,0), (1,1) {7,3}
+
+searched Vector: searched(7,3)
+Button Vector: a(0,1), b(1,0), x(1,1)
+
+
+equation: a*cn + b*cn + x*cn = searched
+
+
+c has to be a possitiv int for each vector
+searched it the lowest possible sum of (c1...cn) 
+
+
+## Find solution
+1. Linear Combination
+2. Weighted Sum (Weighted Average)
+3. Knapsack Problem / Subset Sum
+
+## Best: system of linear equations or a linear inverse problem
+How? i dont know
 
 
